@@ -1,0 +1,36 @@
+<div class="table-responsive">
+    <table class="table table-info text-center">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% for i in data.head %}
+                <th scope="col">{{ i }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in data.rows %}
+            <tr>
+                <th scope="row">{{ row.head }}</th>
+                {% for cell in row.cells %}
+                    <td class="{{ cell.class }}">{{ cell.val }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<hr>
+<div class="table-responsive">
+    <table class="table table-borderless text-center">
+        <thead>
+        <tr>
+            {% for elm in data.line %}
+                <th class="{{ elm.class }}" scope="col">
+                    <h5 class="{{ elm.text }}" style="font-weight: bold">{{ elm.val }}</h5>
+                </th>
+            {% endfor %}
+        </tr>
+        </thead>
+    </table>
+</div>

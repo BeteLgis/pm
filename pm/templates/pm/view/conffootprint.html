@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <table class="text-center">
+            <tbody>
+            <tr>
+                <td class="p-2" rowspan="2">
+                    <h3>1 –</h3>
+                </td>
+                <td style="border-bottom:solid 3px">
+                    <h3>{{ data.match }}</h3>
+                </td>
+                <td rowspan="2">
+                    <h3>= {{ data.conf }}</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h3>{{ data.total }}</h3>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<hr>
+<div class="table-responsive">
+    <table class="table table-info text-center">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% for i in data.head %}
+                <th scope="col">{{ i }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in data.rows %}
+            <tr>
+                <th scope="row">{{ row.head }}</th>
+                {% for cell in row.cells %}
+                  <td class="{{ cell.class }}">{{ cell.val }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<hr>
+<div class="table-responsive">
+    <table class="table table-info text-center">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% for i in data.head2 %}
+                <th scope="col">{{ i }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in data.rows2 %}
+            <tr>
+                <th scope="row">{{ row.head }}</th>
+                {% for cell in row.cells %}
+                    <td class="{{ cell.class }}">{{ cell.val }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

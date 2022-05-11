@@ -13,12 +13,28 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.contrib.auth import views as auth_views
+from django.urls import path
+
+from . import views
+
+settings.DEBUG = True
 
 urlpatterns = [
-    path('', include('algorithms.urls')),
+    path('', views.index, name='index'),
     path('admin/', admin.site.urls),
-]
+    path('register/', views.register_request, name='register'),
+    path('login/', views.login_request, name='login'),
+    path('logout/', views.logout_request, name='logout'),
+    path('password_reset', views.password_reset_request, name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='pm/password/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='pm/password/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='pm/password/password_reset_complete.html'), name='password_reset_complete'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler404 = 'algorithms.views.view_404'
+settings.DEBUG = False
+
+handler404 = 'pm.views.view_404'

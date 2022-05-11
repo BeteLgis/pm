@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'algorithms.apps.AlgorithmsConfig',
+    'pm.apps.PMConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -131,7 +131,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'algorithms/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'pm/media')
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/login'

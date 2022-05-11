@@ -1,0 +1,74 @@
+{% extends "pm/header.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+
+<header class="row fixed-top navbar-light bg-light" id="header">
+    <div class="btn-group my-1 align-items-center">
+        {% for view in data.header %}
+            <a class="col mx-1 btn btn-outline-success btn-lg w-100 {{ view.selected }}" href="{{ view.href }}" data-toggle="tooltip" data-placement="bottom" title="{{ view.tooltip }}">{{ view.name }}</a>
+        {% endfor %}
+        <a class="col mx-1 btn btn-outline-warning btn-lg w-auto" href="/logout">Logout</a>
+    </div>
+</header>
+
+<main class="container-fluid p-3" id="main">
+    {% if data.error %}
+        <h3 class="text-center" style="color: red">{{ data.error }}</h3>
+    {% else %}
+        {% if data.view == data.ViewHistory %}
+            {% include 'pm/view/history.html' %}
+        {% elif data.view == data.ViewFootprint %}
+            {% include 'pm/view/footprint.html' %}
+        {% elif data.view == data.ViewPM4PyFootprint %}
+            {% include 'pm/view/pm4pyfootprint.html' %}
+        {% elif data.view == data.ViewConfFootprint %}
+            {% include 'pm/view/conffootprint.html' %}
+        {% elif data.view == data.ViewPM4PyAlignments or data.view == data.ViewPetri %}
+            {% include 'pm/view/pm4pyalignments.html' %}
+        {% endif %}
+    {% endif %}
+</main>
+
+{% include 'pm/modals.html' %}
+<footer class="row fixed-bottom navbar-light bg-light" aria-label="Footer" id="footer">
+    {% if data.view == data.ViewHistory %}
+        <form class="my-1 btn-group" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col mx-1 form-floating">
+                <input type="text" class="form-control btn-lg name" name="name" id="newname" placeholder="Name" maxlength="64">
+                <label for="newname">Name</label>
+            </div>
+            <div class="col mx-1 btn btn-outline-success btn-lg custom-file">
+                <input type="file" name="file" required id="id_file">
+            </div>
+            <div class="col mx-1 btn btn-outline-success btn-lg custom-file">
+                <input type="file" name="file2" id="id_file2">
+            </div>
+            <input type="submit" name="upload" class="col mx-1 btn btn-outline-success btn-lg" value="Run">
+        </form>
+    {% endif %}
+    <div class="btn-group my-1 align-items-center">
+    {% if data.view == data.ViewHistory %}
+        <a class="col mx-1 btn btn-outline-primary btn-lg" href="{{ data.unload.href }}">{{ data.unload.label }}</a>
+        <a class="col mx-1 btn btn-outline-primary btn-lg" href="{{ data.unload2.href }}">{{ data.unload2.label }}</a>
+        <a class="col mx-1 btn btn-outline-primary btn-lg" href="{{ data.unloadboth.href }}">{{ data.unloadboth.label }}</a>
+        <a class="col mx-1 btn btn-outline-danger btn-lg" href="/?delete=-1">Delete errors</a>
+        <a class="col mx-1 btn btn-outline-danger btn-lg" data-bs-toggle="modal" data-bs-target="#deleteAllModal">Delete all</a>
+    {% elif data.step != None %}
+        <a class="col mx-1 btn btn-outline-primary btn-lg" href="{{ data.clean.href }}">{{ data.clean.label }}</a>
+        <a class="col mx-1 btn btn-outline-success btn-lg" href="{{ data.prev_step.href }}">{{ data.prev_step.label }}</a>
+        <a class="col mx-1 btn btn-outline-success btn-lg" href="{{ data.next_step.href }}">{{ data.next_step.label }}</a>
+        <a class="col mx-1 btn btn-outline-success btn-lg" href="{{ data.first_step.href }}">{{ data.first_step.label }}</a>
+        <a class="col mx-1 btn btn-outline-success btn-lg" href="{{ data.last_step.href }}">{{ data.last_step.label }}</a>
+        <a class="col mx-1 btn btn-outline-warning btn-lg" id="btn_gotostep" href="{{ data.first_step.href }}">Go to step</a>
+        <input type="text" class="col mx-1 input-lg text-center" id="gotostep" placeholder="From 0 to {{ data.last_step.value }}" aria-describedby="btn_gotostep">
+    {% endif %}
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/gh/betelgis/pm-static@master/helper.js"></script>
+
+{% endblock %}
