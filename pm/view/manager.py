@@ -12,7 +12,8 @@ from pm.view.common import *
 from pm.view.conffootprint import ConfFootprintData, ViewConfFootprint
 from pm.view.footprint import FootprintData, ViewFootprint
 from pm.view.history import HistoryData, ViewHistory
-from pm.view.petri import ViewPetri
+from pm.view.log import LogData, ViewLog
+from pm.view.petri import PetriData, ViewPetri
 from pm.view.pm4pyalignments import PM4PyAlignmentsData, ViewPM4PyAlignments
 from pm.view.pm4pyfootrpint import PM4PyFootrpintData, ViewPM4PyFootprint
 from pm.view.record import StepsData, RecordData
@@ -21,7 +22,7 @@ from pm.view.record import StepsData, RecordData
 class AllData(FootprintData, HistoryData):
     def __init__(self):
         super(Data, self).__init__()
-        for _class in [HistoryData(None, None),
+        for _class in [HistoryData(None, None), PetriData(None), LogData(None),
                        FootprintData(None, None, None), PM4PyFootrpintData(None),
                        ConfFootprintData(None, None), PM4PyAlignmentsData(None),
                        StepsData(None, None, None, None),
@@ -32,7 +33,7 @@ class AllData(FootprintData, HistoryData):
 
 
 class ViewManager(View):
-    VIEWS_ALL = {ViewHistory.ID, ViewPetri.ID,
+    VIEWS_ALL = {ViewHistory.ID, ViewPetri.ID, ViewLog.ID,
                  ViewFootprint.ID, ViewPM4PyFootprint.ID,
                  ViewConfFootprint.ID, ViewPM4PyAlignments.ID}
     RAISE = False
@@ -99,6 +100,12 @@ class ViewManager(View):
         step = self._request_get('step', int, 0)
         clean = self._request_get('clean', bool, False)
         files = StoredFiles.from_dict(json.loads(Record.objects.get(id=record).json))
+
+        if files.log is not None:
+            log = ViewLog(self._request, record)
+            self.data.header = log.header()
+            if view == ViewLog.ID:
+                self.data = log.load(files.log)
 
         if files.petri is not None:
             petri = ViewPetri(self._request, record)

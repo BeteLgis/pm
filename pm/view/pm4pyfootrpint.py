@@ -13,7 +13,7 @@ class PM4PyFootrpintData(RecordData):
 
 
 class ViewPM4PyFootprint(View):
-    ID = 3
+    ID = 4
 
     def __init__(self, request, record):
         super().__init__(request, self.ID)

@@ -7,6 +7,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from pm.storage import StoredFiles
 from .common import AlgorithmsCommon
 from .footprint import AlgorithmsFootprint
+from .log import AlgorithmsLog
 from .petri import AlgorithmsPetri
 from .pm4pyfootprint import AlgorithmsPM4PyFootprint
 from .pm4pyalignments import AlgorithmsPM4PyAlignments
@@ -45,11 +46,11 @@ class AlgorithmsManager(AlgorithmsCommon):
         try:
             src = files.src
             src2 = files.src2
-            if src.ext in {'.xes', '.pnml', '.csv'}:
-                files.petri = AlgorithmsPetri().run(src).copy()
+            files.log = AlgorithmsLog().run(src).copy()
             if src2 is None:
                 files.footprint = AlgorithmsFootprint().run(src).copy()
                 if src.ext in {'.xes', '.pnml', '.csv'}:
+                    files.petri = AlgorithmsPetri().run(src).copy()
                     files.pm4py_footprint = AlgorithmsPM4PyFootprint().run(src).copy()
             elif src.ext in {'.xes', '.pnml', '.csv'} and src2.ext in {'.xes', '.pnml', '.csv'}:
                 files.pm4py_alignments = AlgorithmsPM4PyAlignments().run(src, src2).copy()

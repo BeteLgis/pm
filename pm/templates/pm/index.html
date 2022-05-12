@@ -28,6 +28,8 @@
             {% include 'pm/view/conffootprint.html' %}
         {% elif data.view == data.ViewPM4PyAlignments or data.view == data.ViewPetri %}
             {% include 'pm/view/pm4pyalignments.html' %}
+        {% elif data.view == data.ViewLog %}
+            {% include 'pm/view/log.html' %}
         {% endif %}
     {% endif %}
 </main>

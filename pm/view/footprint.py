@@ -12,7 +12,7 @@ class FootprintData(StepsData):
 
 
 class ViewFootprint(View):
-    ID = 2
+    ID = 3
 
     def __init__(self, request, record, step, clean):
         super().__init__(request, self.ID)

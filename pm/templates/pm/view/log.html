@@ -1,0 +1,14 @@
+<div class="table-responsive">
+    <table class="table table-info text-center">
+        <tbody>
+        {% for row in data.log %}
+            <tr>
+                <th scope="row">{{ row.1 }}</th>
+                {% for cell in row.0 %}
+                    <td class="">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

@@ -13,7 +13,7 @@ class PM4PyAlignmentsData(RecordData):
 
 
 class ViewPM4PyAlignments(View):
-    ID = 5
+    ID = 6
 
     def __init__(self, request, record):
         super().__init__(request, self.ID)

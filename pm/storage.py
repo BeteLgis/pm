@@ -49,6 +49,7 @@ class StoredFiles:
         self.pm4py_footprint = None
         self.pm4py_alignments = None
         self.petri = None
+        self.log = None
 
     def __del__(self):
         shutil.rmtree(self.temp, ignore_errors=True)
@@ -73,7 +74,8 @@ class StoredFiles:
             'footprint': self.footprint.to_dict() if self.footprint is not None else None,
             'pm4py_footprint': self.pm4py_footprint.to_dict() if self.pm4py_footprint is not None else None,
             'pm4py_alignments': self.pm4py_alignments.to_dict() if self.pm4py_alignments is not None else None,
-            'petri': self.petri.to_dict() if self.petri is not None else None
+            'petri': self.petri.to_dict() if self.petri is not None else None,
+            'log': self.log.to_dict() if self.log is not None else None
         }
 
     @staticmethod
@@ -86,4 +88,6 @@ class StoredFiles:
         files.pm4py_alignments = StoredFile.from_dict(files, data['pm4py_alignments'])
         if 'petri' in data:
             files.petri = StoredFile.from_dict(files, data['petri'])
+        if 'log' in data:
+            files.log = StoredFile.from_dict(files, data['log'])
         return files

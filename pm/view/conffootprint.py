@@ -21,7 +21,7 @@ class ConfFootprintData(ConfData):
 
 
 class ViewConfFootprint(View):
-    ID = 4
+    ID = 5
 
     def __init__(self, request, record, record2):
         super().__init__(request, self.ID)

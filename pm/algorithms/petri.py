@@ -13,6 +13,6 @@ class AlgorithmsPetri(AlgorithmsCommon):
             net, im, fm = self.inductive(log)
 
         gviz = pn_visualizer.apply(net, im, fm, parameters={pn_visualizer.Variants.WO_DECORATION.value.Parameters.FORMAT: "svg"})
-        tempfile = file.files.make_temp(f"{file.fullname}_alignments", '.svg')
+        tempfile = file.files.make_temp(f"{file.fullname}_petri", '.svg')
         pn_visualizer.save(gviz, tempfile.path)
         return tempfile
